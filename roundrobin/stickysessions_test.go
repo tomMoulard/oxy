@@ -421,34 +421,14 @@ func TestBadCookieVal(t *testing.T) {
 }
 
 func BenchmarkStickysessions(b *testing.B) {
-	s := NewStickySession("pwet")
-	urls := []*url.URL{
-		&url.URL{Scheme: "http", Host: "10.10.10.10", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.11", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.12", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.13", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.14", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.15", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.16", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.17", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.18", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.19", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.20", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.21", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.22", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.23", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.24", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.25", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.26", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.27", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.28", Path: "/"},
-		&url.URL{Scheme: "http", Host: "10.10.10.29", Path: "/"},
-	}
-	urlsn := len(urls)
+	s := NewStickySession("sticky")
 
-	urlsh := make([]string, len(urls))
-	for i, u := range urls {
-		urlsh[i] = hash(u.String())
+	urlsn := 200
+	urlsh := make([]string, urlsn)
+	urls := make([]*url.URL, urlsn)
+	for i := 0; i < urlsn; i++ {
+		urls[i] = &url.URL{Scheme: "http", Host: fmt.Sprintf("10.10.10.%d", i), Path: "/"}
+		urlsh[i] = hash(urls[i].String())
 	}
 
 	numCPU := runtime.NumCPU()
