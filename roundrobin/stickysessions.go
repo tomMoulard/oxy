@@ -32,9 +32,7 @@ type StickySession struct {
 
 // NewStickySession creates a new StickySession
 func NewStickySession(cookieName string) *StickySession {
-	return &StickySession{
-		cookieName: cookieName,
-	}
+	return &StickySession{cookieName: cookieName}
 }
 
 // NewStickySessionWithOptions creates a new StickySession whilst allowing for options to
